@@ -2,7 +2,7 @@
 
 **An open-source, structured repository of AI policy documents released by Indian central and state governments.**
 
-Built for policy researchers, government officials, and the public interest technology ecosystem.
+Built for policy researchers, tech builders, and the public interest technology ecosystem.
 
 ---
 
