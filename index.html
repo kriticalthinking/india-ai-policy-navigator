@@ -1125,7 +1125,7 @@
         <h3>What We Track</h3>
         <p>Central government strategy documents, legislation, rules and notifications, regulatory circulars and advisories, sector-specific guidelines, state government AI policies, and announced-but-unreleased policies. We cover NITI Aayog, MeitY, IndiaAI Mission, SEBI, TRAI, ICMR, RBI, MoHFW, Ministry of Agriculture, MoHUA, CDSCO, AICTE, and state governments including Maharashtra, Telangana, Karnataka, and Tamil Nadu.</p>
         <h3>How It Works</h3>
-        <p>All data lives in a public <a href="https://github.com/kriticalthinking/india-ai-policy-navigator" target="_blank" style="color:var(--teal)">GitHub repository</a> as a structured CSV file. The website reads from that file directly. Anyone can fork the repo, use the data in their own tools, or submit pull requests to add new documents.</p>
+        <p>All data lives in a public <a href="https://github.com/"kriticalthinking"/india-ai-policy-navigator" target="_blank" style="color:var(--teal)">GitHub repository</a> as a structured CSV file. The website reads from that file directly. Anyone can fork the repo, use the data in their own tools, or submit pull requests to add new documents.</p>
         <h3>Limitations</h3>
         <p>This repository is maintained on a best-effort basis and is not affiliated with any government body. It may not capture every document. Always verify obligations against official government sources before making compliance decisions.</p>
       </div>
@@ -1133,8 +1133,8 @@
         <div class="contribute-card">
           <h3>Contribute</h3>
           <p>Found a policy document that's missing? Spotted an error? You can contribute directly on GitHub — no technical skills required.</p>
-          <a href="https://github.com/kriticalthinking/india-ai-policy-navigator/issues/new" target="_blank">Submit a missing document</a>
-          <a href="https://github.com/kriticalthinking/india-ai-policy-navigator" target="_blank" class="secondary">View on GitHub</a>
+          <a href="https://github.com/"kriticalthinking"/india-ai-policy-navigator/issues/new" target="_blank">Submit a missing document</a>
+          <a href="https://github.com/"kriticalthinking"/india-ai-policy-navigator" target="_blank" class="secondary">View on GitHub</a>
         </div>
       </div>
     </div>
@@ -1146,7 +1146,7 @@
   <div class="footer-inner">
     <span>India AI Policy Navigator — Open Source &amp; Community Maintained</span>
     <div class="footer-links">
-      <a href="https://github.com/kriticalthinking/india-ai-policy-navigator" target="_blank">GitHub</a>
+      <a href="https://github.com/"kriticalthinking"/india-ai-policy-navigator" target="_blank">GitHub</a>
       <a href="#" onclick="showPage('about'); return false;">About</a>
       <a href="#" onclick="showPage('tracker'); return false;">Policy Tracker</a>
     </div>
@@ -1243,7 +1243,7 @@ async function loadData() {
     document.getElementById("loading").style.display = "none";
     renderCards(allPolicies);
   } catch (e) {
-    document.getElementById("loading").innerHTML = `<p style="color:#b85e10">Could not load policy data. If you're viewing this locally, try opening via a web server. <a href="https://github.com/${kriticalthinking}/${REPO_NAME}" target="_blank">View raw data on GitHub →</a></p>`;
+    document.getElementById("loading").innerHTML = `<p style="color:#b85e10">Could not load policy data. If you're viewing this locally, try opening via a web server. <a href="https://github.com/${"kriticalthinking"}/${REPO_NAME}" target="_blank">View raw data on GitHub →</a></p>`;
   }
 }
 
