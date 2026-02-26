@@ -1208,7 +1208,7 @@ const CSV_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${REPO_NAM
 let allPolicies = [];
 
 function parseCSV(text) {
-  const lines = text.trim().split("\n");
+  const lines = text.trim().replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");
   const headers = lines[0].split(",").map(h => h.trim());
   return lines.slice(1).map(line => {
     // Simple CSV parse (handles basic cases)
