@@ -1200,7 +1200,7 @@
 // ============================================================
 const GITHUB_USERNAME = "kriticalthinking";
 const REPO_NAME = "india-ai-policy-navigator";
-const CSV_URL = `https://raw.githubusercontent.com/${"kriticalthinking"}/${"india-ai-policy-navigator"}/main/data/policies.csv`;
+const CSV_URL = `https://raw.githubusercontent.com/${"kriticalthinking"}/${india-ai-policy-navigator}/main/data/policies.csv`;
 
 // ============================================================
 // DATA
@@ -1243,7 +1243,7 @@ async function loadData() {
     document.getElementById("loading").style.display = "none";
     renderCards(allPolicies);
   } catch (e) {
-    document.getElementById("loading").innerHTML = `<p style="color:#b85e10">Could not load policy data. If you're viewing this locally, try opening via a web server. <a href="https://github.com/${"kriticalthinking"}/${"india-ai-policy-navigator"}" target="_blank">View raw data on GitHub →</a></p>`;
+    document.getElementById("loading").innerHTML = `<p style="color:#b85e10">Could not load policy data. If you're viewing this locally, try opening via a web server. <a href="https://github.com/${"kriticalthinking"}/${india-ai-policy-navigator}" target="_blank">View raw data on GitHub →</a></p>`;
   }
 }
 
