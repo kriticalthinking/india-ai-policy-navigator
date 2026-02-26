@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>India AI Policy Navigator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;0,700;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1923;
+    --ink-soft: #3d4f5e;
+    --ink-muted: #7a8fa0;
+    --saffron: #e8761a;
+    --saffron-light: #fdf0e6;
+    --teal: #0d6e72;
+    --teal-light: #e6f4f5;
+    --cream: #faf8f4;
+    --white: #ffffff;
+    --border: #e2ddd8;
+    --border-light: #f0ede8;
+    --shadow: 0 1px 3px rgba(15,25,35,0.08), 0 4px 16px rgba(15,25,35,0.06);
+    --shadow-hover: 0 4px 12px rgba(15,25,35,0.12), 0 12px 40px rgba(15,25,35,0.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--ink);
+    color: var(--white);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid var(--saffron);
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    text-decoration: none;
+  }
+
+  .logo-text {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--white);
+    letter-spacing: -0.01em;
+  }
+
+  .logo-accent {
+    color: var(--saffron);
+  }
+
+  .logo-tag {
+    font-size: 0.7rem;
+    font-weight: 300;
+    color: var(--ink-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  nav {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  nav a {
+    color: #a0b4c4;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 400;
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+    transition: all 0.15s;
+    letter-spacing: 0.01em;
+  }
+
+  nav a:hover, nav a.active {
+    color: var(--white);
+    background: rgba(255,255,255,0.08);
+  }
+
+  nav a.active {
+    color: var(--saffron);
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--ink);
+    color: var(--white);
+    padding: 3.5rem 2rem 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    max-width: 700px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--saffron);
+  }
+
+  .hero p {
+    font-size: 1rem;
+    color: #a0b4c4;
+    max-width: 600px;
+    font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--saffron);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.2rem;
+  }
+
+  /* MAIN LAYOUT */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  /* SEARCH + FILTER BAR */
+  .controls {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    box-shadow: var(--shadow);
+  }
+
+  .search-wrap {
+    flex: 1;
+    min-width: 220px;
+    position: relative;
+  }
+
+  .search-wrap svg {
+    position: absolute;
+    left: 0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-muted);
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 0.65rem 0.85rem 0.65rem 2.4rem;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink);
+    background: var(--cream);
+    transition: border-color 0.15s;
+    outline: none;
+  }
+
+  .search-input:focus { border-color: var(--teal); background: var(--white); }
+
+  .filter-group {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .filter-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  select {
+    padding: 0.6rem 2rem 0.6rem 0.85rem;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--ink);
+    background: var(--cream) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a8fa0' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 0.6rem center;
+    appearance: none;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  select:focus { border-color: var(--teal); }
+
+  .results-count {
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    white-space: nowrap;
+  }
+
+  .results-count span {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* POLICY CARDS */
+  .cards-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.4rem 1.6rem;
+    cursor: pointer;
+    transition: all 0.18s;
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.75rem;
+    align-items: start;
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-hover);
+    border-color: var(--teal);
+    transform: translateY(-1px);
+  }
+
+  .card-main {}
+
+  .card-meta {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .tag-sector {
+    background: var(--teal-light);
+    color: var(--teal);
+  }
+
+  .tag-type {
+    background: var(--saffron-light);
+    color: #b85e10;
+  }
+
+  .tag-status-final { background: #e8f5e9; color: #2e7d32; }
+  .tag-status-draft { background: #fff8e1; color: #e65100; }
+  .tag-status-forthcoming { background: #f3e5f5; color: #6a1b9a; }
+  .tag-status-superseded { background: #f5f5f5; color: #757575; }
+
+  .card-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.35;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+
+  .card-issuer {
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-summary {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
+
+  .card-date {
+    font-size: 0.75rem;
+    color: var(--ink-muted);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .card-link {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-muted);
+    transition: all 0.15s;
+    text-decoration: none;
+  }
+
+  .card-link:hover {
+    background: var(--ink);
+    color: var(--white);
+    border-color: var(--ink);
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,25,35,0.6);
+    z-index: 200;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem 1rem;
+    overflow-y: auto;
+    backdrop-filter: blur(3px);
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--white);
+    border-radius: 14px;
+    max-width: 720px;
+    width: 100%;
+    box-shadow: 0 20px 80px rgba(15,25,35,0.3);
+    overflow: hidden;
+    margin: auto;
+    animation: modalIn 0.2s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .modal-header {
+    background: var(--ink);
+    padding: 1.75rem 2rem;
+    position: relative;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: var(--white);
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: background 0.15s;
+  }
+
+  .modal-close:hover { background: rgba(255,255,255,0.2); }
+
+  .modal-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+  }
+
+  .modal-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.4rem;
+  }
+
+  .modal-issuer {
+    font-size: 0.85rem;
+    color: #a0b4c4;
+  }
+
+  .modal-body {
+    padding: 1.75rem 2rem;
+  }
+
+  .modal-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-section:last-child { margin-bottom: 0; }
+
+  .modal-section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-section p {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+  }
+
+  .modal-section .obligations-text {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    padding: 0.85rem 1rem;
+    background: var(--saffron-light);
+    border-left: 3px solid var(--saffron);
+    border-radius: 0 6px 6px 0;
+  }
+
+  .modal-date-row {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-date-item { display: flex; flex-direction: column; }
+
+  .modal-date-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    margin-bottom: 0.2rem;
+  }
+
+  .modal-date-value {
+    font-size: 0.9rem;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.25rem;
+    background: var(--ink);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 7px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: background 0.15s;
+  }
+
+  .btn-primary:hover { background: var(--teal); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.25rem;
+    background: var(--cream);
+    color: var(--ink);
+    text-decoration: none;
+    border-radius: 7px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1.5px solid var(--border);
+    transition: all 0.15s;
+  }
+
+  .btn-secondary:hover { border-color: var(--ink); }
+
+  /* COMING SOON PAGES */
+  .coming-soon-page {
+    padding: 3rem 0;
+    text-align: center;
+  }
+
+  .coming-soon-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--saffron-light);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 1.75rem;
+  }
+
+  .coming-soon-page h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+  }
+
+  .coming-soon-page p {
+    font-size: 0.95rem;
+    color: var(--ink-muted);
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    line-height: 1.7;
+  }
+
+  .coming-soon-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    text-align: left;
+  }
+
+  .feature-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    box-shadow: var(--shadow);
+  }
+
+  .feature-card h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+
+  .feature-card p {
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  .notify-form {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .notify-form input {
+    flex: 1;
+    padding: 0.65rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+  }
+
+  .notify-form input:focus { border-color: var(--teal); }
+
+  .notify-form button {
+    padding: 0.65rem 1.25rem;
+    background: var(--ink);
+    color: var(--white);
+    border: none;
+    border-radius: 7px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+  }
+
+  .notify-form button:hover { background: var(--teal); }
+
+  /* TRACKER PAGE */
+  .tracker-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .tracker-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .tracker-status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .dot-announced { background: #6a1b9a; }
+  .dot-consultation { background: #e65100; }
+  .dot-expected { background: var(--teal); }
+
+  .tracker-content h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+
+  .tracker-content p {
+    font-size: 0.83rem;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+
+  .tracker-content .tracker-body {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.3rem;
+  }
+
+  /* ABOUT PAGE */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .about-content h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--ink);
+  }
+
+  .about-content p {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+
+  .about-content h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.6rem;
+    color: var(--ink);
+  }
+
+  .contribute-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+
+  .contribute-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--ink);
+  }
+
+  .contribute-card p {
+    font-size: 0.83rem;
+    color: var(--ink-muted);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+  }
+
+  .contribute-card a {
+    display: block;
+    padding: 0.65rem 1rem;
+    background: var(--ink);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 7px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 0.6rem;
+    transition: background 0.15s;
+  }
+
+  .contribute-card a:hover { background: var(--teal); }
+
+  .contribute-card a.secondary {
+    background: var(--cream);
+    color: var(--ink);
+    border: 1.5px solid var(--border);
+  }
+
+  .contribute-card a.secondary:hover { background: var(--white); border-color: var(--ink); }
+
+  /* PAGE HEADER */
+  .page-header {
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-header h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+
+  .page-header p {
+    font-size: 0.88rem;
+    color: var(--ink-muted);
+  }
+
+  /* LOADING */
+  .loading {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--ink-muted);
+  }
+
+  .loading-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--border);
+    border-top-color: var(--teal);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin: 0 auto 1rem;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--ink-muted);
+  }
+
+  .empty-state p { font-size: 0.9rem; }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: #6b8090;
+    padding: 2rem;
+    margin-top: 4rem;
+    font-size: 0.8rem;
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .footer-links a {
+    color: #6b8090;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .footer-links a:hover { color: var(--white); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero { padding: 2rem 1.25rem; }
+    main { padding: 1.25rem; }
+    .hero-stats { gap: 1.5rem; }
+    nav a { font-size: 0.75rem; padding: 0.4rem 0.5rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .card { grid-template-columns: 1fr; }
+    .card-right { flex-direction: row; align-items: center; }
+    .modal { margin: 0; border-radius: 14px 14px 0 0; }
+    .modal-overlay { align-items: flex-end; padding: 0; }
+    nav { display: none; }
+    .mobile-menu-toggle { display: flex; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo" onclick="showPage('index'); return false;">
+      <span class="logo-text">India <span class="logo-accent">AI</span> Policy Navigator</span>
+      <span class="logo-tag">Open Source</span>
+    </a>
+    <nav>
+      <a href="#" class="active" id="nav-index" onclick="showPage('index'); return false;">Policy Index</a>
+      <a href="#" id="nav-tracker" onclick="showPage('tracker'); return false;">Tracker</a>
+      <a href="#" id="nav-compare" onclick="showPage('compare'); return false;">Compare</a>
+      <a href="#" id="nav-checker" onclick="showPage('checker'); return false;">Compliance Checker</a>
+      <a href="#" id="nav-about" onclick="showPage('about'); return false;">About</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO (shown only on index page) -->
+<div id="hero-section" class="hero">
+  <div class="hero-inner">
+    <h1>Every <em>AI policy</em> released by Indian government. In one place.</h1>
+    <p>A structured, open-source reference for policy researchers, government officials, and the public interest technology ecosystem. Covers central ministries, regulators, and state governments.</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num" id="stat-total">—</span>
+        <span class="stat-label">Documents tracked</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" id="stat-sectors">10</span>
+        <span class="stat-label">Sectors covered</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" id="stat-bodies">15+</span>
+        <span class="stat-label">Issuing bodies</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" id="stat-states">4</span>
+        <span class="stat-label">State governments</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- ========== INDEX PAGE ========== -->
+  <div class="page active" id="page-index">
+    <div class="controls">
+      <div class="search-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" class="search-input" id="search-input" placeholder="Search by title, issuing body, keyword…" oninput="filterPolicies()">
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Sector</span>
+        <select id="filter-sector" onchange="filterPolicies()">
+          <option value="">All sectors</option>
+          <option>Agriculture</option>
+          <option>Cross-cutting</option>
+          <option>Data Governance</option>
+          <option>Defence</option>
+          <option>Education</option>
+          <option>Finance</option>
+          <option>Health</option>
+          <option>Telecom</option>
+          <option>Urban</option>
+        </select>
+        <select id="filter-type" onchange="filterPolicies()">
+          <option value="">All types</option>
+          <option>Legislation</option>
+          <option>Strategy</option>
+          <option>Guidelines</option>
+          <option>Advisory</option>
+          <option>Framework</option>
+          <option>Policy</option>
+          <option>Circular</option>
+          <option>Recommendation</option>
+          <option>Report</option>
+        </select>
+        <select id="filter-status" onchange="filterPolicies()">
+          <option value="">All statuses</option>
+          <option>Final</option>
+          <option>Draft</option>
+          <option>Forthcoming</option>
+          <option>Superseded</option>
+        </select>
+      </div>
+      <span class="results-count" id="results-count"></span>
+    </div>
+
+    <div id="loading" class="loading">
+      <div class="loading-spinner"></div>
+      <p>Loading policy documents…</p>
+    </div>
+
+    <div class="cards-grid" id="cards-grid"></div>
+
+    <div class="empty-state" id="empty-state" style="display:none">
+      <p>No documents match your search. Try different keywords or clear the filters.</p>
+    </div>
+  </div>
+
+  <!-- ========== TRACKER PAGE ========== -->
+  <div class="page" id="page-tracker">
+    <div class="page-header">
+      <h2>Policy Tracker</h2>
+      <p>Policies announced, under consultation, or expected — but not yet released.</p>
+    </div>
+    <div class="tracker-grid">
+      <div class="tracker-card">
+        <div class="tracker-status-dot dot-announced"></div>
+        <div class="tracker-content">
+          <h4>Digital Personal Data Protection Rules</h4>
+          <p class="tracker-body">Subordinate rules under the DPDP Act 2023 that will specify operational details: consent managers, significant data fiduciary criteria, data localisation requirements, and grievance redressal timelines.</p>
+          <p><strong>Issuing body:</strong> MeitY &nbsp;|&nbsp; <strong>Status:</strong> Announced — draft rules circulated for internal review &nbsp;|&nbsp; <strong>Expected:</strong> 2025–26</p>
+        </div>
+      </div>
+      <div class="tracker-card">
+        <div class="tracker-status-dot dot-announced"></div>
+        <div class="tracker-content">
+          <h4>Strategy for AI in Healthcare for India (SAHI)</h4>
+          <p class="tracker-body">MoHFW's forthcoming health-sector-specific AI strategy covering clinical validation standards, AI procurement in public hospitals, and accountability frameworks for diagnostic AI.</p>
+          <p><strong>Issuing body:</strong> MoHFW / NHA &nbsp;|&nbsp; <strong>Status:</strong> Under development &nbsp;|&nbsp; <strong>Expected:</strong> 2025–26</p>
+        </div>
+      </div>
+      <div class="tracker-card">
+        <div class="tracker-status-dot dot-consultation"></div>
+        <div class="tracker-content">
+          <h4>IRDAI AI Guidelines for Insurance Sector</h4>
+          <p class="tracker-body">Pending guidelines from the Insurance Regulatory and Development Authority on AI use in underwriting, claims processing, fraud detection, and customer-facing insurance chatbots.</p>
+          <p><strong>Issuing body:</strong> IRDAI &nbsp;|&nbsp; <strong>Status:</strong> Working group formed — guidelines pending finalisation &nbsp;|&nbsp; <strong>Expected:</strong> 2025</p>
+        </div>
+      </div>
+      <div class="tracker-card">
+        <div class="tracker-status-dot dot-expected"></div>
+        <div class="tracker-content">
+          <h4>India AI Safety Institute — Framework & Mandate</h4>
+          <p class="tracker-body">Formal establishment of India's AI Safety Institute under the IndiaAI Mission's Safe and Trusted AI pillar. Will develop evaluation methodologies, red-teaming frameworks, and safety benchmarks.</p>
+          <p><strong>Issuing body:</strong> IndiaAI / MeitY &nbsp;|&nbsp; <strong>Status:</strong> Call for partners issued — institute under formation &nbsp;|&nbsp; <strong>Expected:</strong> 2025–26</p>
+        </div>
+      </div>
+      <div class="tracker-card">
+        <div class="tracker-status-dot dot-expected"></div>
+        <div class="tracker-content">
+          <h4>Bureau of Indian Standards (BIS) AI Risk Taxonomy</h4>
+          <p class="tracker-body">BIS is working on AI risk taxonomy and certification standards aligned with international frameworks (ISO 42001, EU AI Act). Will underpin procurement requirements for government AI systems.</p>
+          <p><strong>Issuing body:</strong> BIS / DPIIT &nbsp;|&nbsp; <strong>Status:</strong> Standards development in progress &nbsp;|&nbsp; <strong>Expected:</strong> 2025–26</p>
+        </div>
+      </div>
+      <div class="tracker-card">
+        <div class="tracker-status-dot dot-expected"></div>
+        <div class="tracker-content">
+          <h4>RBI Guidelines for AI in Banking Operations</h4>
+          <p class="tracker-body">Following the FREE-AI framework released in August 2025, RBI is expected to release binding guidelines for banks on AI governance, model risk management, and consumer disclosure requirements.</p>
+          <p><strong>Issuing body:</strong> RBI &nbsp;|&nbsp; <strong>Status:</strong> Expected as follow-on to FREE-AI framework &nbsp;|&nbsp; <strong>Expected:</strong> 2026</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== COMPARE PAGE ========== -->
+  <div class="page" id="page-compare">
+    <div class="coming-soon-page">
+      <div class="coming-soon-icon">⚖️</div>
+      <h2>Comparative Analysis</h2>
+      <p>Select two or more policy documents and see how they align, conflict, or leave gaps — across principles, obligations, and sector coverage.</p>
+      <div class="coming-soon-features">
+        <div class="feature-card">
+          <h4>Side-by-side comparison</h4>
+          <p>Compare any two documents across shared dimensions: scope, obligations, enforcement, and definitions.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Gap analysis</h4>
+          <p>Identify areas where Indian AI policy is silent — topics covered internationally but not yet addressed domestically.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Conflict detector</h4>
+          <p>Flag where two applicable policies impose contradictory requirements on the same entity or use case.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Sector cross-map</h4>
+          <p>See which cross-cutting frameworks apply alongside sector-specific guidelines for any given deployment context.</p>
+        </div>
+      </div>
+      <p style="font-size:0.82rem; color: var(--ink-muted);">Register your interest to be notified when this launches</p>
+      <div class="notify-form">
+        <input type="email" placeholder="your@email.com">
+        <button onclick="handleNotify(this)">Notify me</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== COMPLIANCE CHECKER PAGE ========== -->
+  <div class="page" id="page-checker">
+    <div class="coming-soon-page">
+      <div class="coming-soon-icon">✅</div>
+      <h2>Compliance Checker</h2>
+      <p>Tell us what you're building and who you are — get a filtered list of applicable frameworks with key obligations highlighted for your specific context.</p>
+      <div class="coming-soon-features">
+        <div class="feature-card">
+          <h4>Use-case filtering</h4>
+          <p>Select your AI application type — diagnostic tool, credit scoring, citizen chatbot, fraud detection — and see exactly which frameworks apply.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Entity-based view</h4>
+          <p>Filter by entity type: central government, state government, private company (regulated), startup, research institution.</p>
+        </div>
+        <div class="feature-card">
+          <h4>What's allowed / unclear / restricted</h4>
+          <p>Plain-English summary of permissions, ambiguities, and prohibitions for your specific deployment context.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Exportable checklist</h4>
+          <p>Download a compliance checklist PDF tailored to your use case for internal governance documentation.</p>
+        </div>
+      </div>
+      <p style="font-size:0.82rem; color: var(--ink-muted);">Register your interest to be notified when this launches</p>
+      <div class="notify-form">
+        <input type="email" placeholder="your@email.com">
+        <button onclick="handleNotify(this)">Notify me</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== ABOUT PAGE ========== -->
+  <div class="page" id="page-about">
+    <div class="about-grid">
+      <div class="about-content">
+        <h2>About This Project</h2>
+        <p>India AI Policy Navigator is an open-source, community-maintained repository of every significant AI-related policy, legislation, advisory, and guideline released by Indian government bodies — central ministries, regulators, and state governments.</p>
+        <p>There is no single place where policy researchers, government officials, or the technology ecosystem can find all of India's AI governance documents with structured metadata, plain-English summaries, and reliable links. This project exists to fix that.</p>
+        <h3>Who It's For</h3>
+        <p><strong>Policy researchers</strong> studying India's AI governance landscape and tracking its evolution over time. <strong>Government officials</strong> checking which frameworks apply before deploying AI systems in their departments. <strong>Public sector technology companies</strong> doing compliance due diligence. <strong>Civil society and journalists</strong> tracking how India is regulating AI.</p>
+        <h3>What We Track</h3>
+        <p>Central government strategy documents, legislation, rules and notifications, regulatory circulars and advisories, sector-specific guidelines, state government AI policies, and announced-but-unreleased policies. We cover NITI Aayog, MeitY, IndiaAI Mission, SEBI, TRAI, ICMR, RBI, MoHFW, Ministry of Agriculture, MoHUA, CDSCO, AICTE, and state governments including Maharashtra, Telangana, Karnataka, and Tamil Nadu.</p>
+        <h3>How It Works</h3>
+        <p>All data lives in a public <a href="https://github.com/kriticalthinking/india-ai-policy-navigator" target="_blank" style="color:var(--teal)">GitHub repository</a> as a structured CSV file. The website reads from that file directly. Anyone can fork the repo, use the data in their own tools, or submit pull requests to add new documents.</p>
+        <h3>Limitations</h3>
+        <p>This repository is maintained on a best-effort basis and is not affiliated with any government body. It may not capture every document. Always verify obligations against official government sources before making compliance decisions.</p>
+      </div>
+      <div>
+        <div class="contribute-card">
+          <h3>Contribute</h3>
+          <p>Found a policy document that's missing? Spotted an error? You can contribute directly on GitHub — no technical skills required.</p>
+          <a href="https://github.com/kriticalthinking/india-ai-policy-navigator/issues/new" target="_blank">Submit a missing document</a>
+          <a href="https://github.com/kriticalthinking/india-ai-policy-navigator" target="_blank" class="secondary">View on GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span>India AI Policy Navigator — Open Source &amp; Community Maintained</span>
+    <div class="footer-links">
+      <a href="https://github.com/kriticalthinking/india-ai-policy-navigator" target="_blank">GitHub</a>
+      <a href="#" onclick="showPage('about'); return false;">About</a>
+      <a href="#" onclick="showPage('tracker'); return false;">Policy Tracker</a>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-tags" id="modal-tags"></div>
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-issuer" id="modal-issuer"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-date-row">
+        <div class="modal-date-item">
+          <span class="modal-date-label">Release Date</span>
+          <span class="modal-date-value" id="modal-date"></span>
+        </div>
+        <div class="modal-date-item">
+          <span class="modal-date-label">Status</span>
+          <span class="modal-date-value" id="modal-status-text"></span>
+        </div>
+        <div class="modal-date-item">
+          <span class="modal-date-label">Last Verified</span>
+          <span class="modal-date-value" id="modal-verified"></span>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">Summary</div>
+        <p id="modal-summary"></p>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">Who It Applies To</div>
+        <p id="modal-applies"></p>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">Key Obligations</div>
+        <div class="obligations-text" id="modal-obligations"></div>
+      </div>
+      <div class="modal-actions" id="modal-actions"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// CONFIGURATION — replace with your GitHub username
+// ============================================================
+const GITHUB_USERNAME = "YOUR_GITHUB_USERNAME";
+const REPO_NAME = "india-ai-policy-navigator";
+const CSV_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${REPO_NAME}/main/data/policies.csv`;
+
+// ============================================================
+// DATA
+// ============================================================
+let allPolicies = [];
+
+function parseCSV(text) {
+  const lines = text.trim().split("\n");
+  const headers = lines[0].split(",").map(h => h.trim());
+  return lines.slice(1).map(line => {
+    // Simple CSV parse (handles basic cases)
+    const values = [];
+    let current = "";
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') {
+        inQuotes = !inQuotes;
+      } else if (ch === "," && !inQuotes) {
+        values.push(current.trim());
+        current = "";
+      } else {
+        current += ch;
+      }
+    }
+    values.push(current.trim());
+    const obj = {};
+    headers.forEach((h, i) => obj[h] = values[i] || "");
+    return obj;
+  }).filter(row => row.id && row.title);
+}
+
+async function loadData() {
+  try {
+    const res = await fetch(CSV_URL + "?t=" + Date.now());
+    if (!res.ok) throw new Error("Could not fetch CSV");
+    const text = await res.text();
+    allPolicies = parseCSV(text);
+    document.getElementById("stat-total").textContent = allPolicies.filter(p => p.status !== "Forthcoming").length;
+    document.getElementById("loading").style.display = "none";
+    renderCards(allPolicies);
+  } catch (e) {
+    document.getElementById("loading").innerHTML = `<p style="color:#b85e10">Could not load policy data. If you're viewing this locally, try opening via a web server. <a href="https://github.com/${GITHUB_USERNAME}/${REPO_NAME}" target="_blank">View raw data on GitHub →</a></p>`;
+  }
+}
+
+// ============================================================
+// RENDERING
+// ============================================================
+function formatDate(dateStr) {
+  if (!dateStr || dateStr === "null") return "—";
+  const d = new Date(dateStr);
+  if (isNaN(d)) return dateStr;
+  return d.toLocaleDateString("en-IN", { year: "numeric", month: "short", day: "numeric" });
+}
+
+function sectorTag(sectorStr) {
+  if (!sectorStr) return "";
+  return sectorStr.split("|").map(s => s.trim()).map(s =>
+    `<span class="tag tag-sector">${s}</span>`
+  ).join("");
+}
+
+function statusClass(status) {
+  const map = { "final": "tag-status-final", "draft": "tag-status-draft", "forthcoming": "tag-status-forthcoming", "superseded": "tag-status-superseded" };
+  return map[(status || "").toLowerCase()] || "tag-status-final";
+}
+
+function renderCards(policies) {
+  const grid = document.getElementById("cards-grid");
+  const empty = document.getElementById("empty-state");
+  const count = document.getElementById("results-count");
+
+  if (policies.length === 0) {
+    grid.innerHTML = "";
+    empty.style.display = "block";
+    count.innerHTML = "No results";
+    return;
+  }
+
+  empty.style.display = "none";
+  count.innerHTML = `<span>${policies.length}</span> document${policies.length !== 1 ? "s" : ""}`;
+
+  grid.innerHTML = policies.map((p, i) => `
+    <div class="card" onclick="openModal(${allPolicies.indexOf(p)})">
+      <div class="card-main">
+        <div class="card-meta">
+          ${sectorTag(p.sector)}
+          <span class="tag tag-type">${p.document_type || ""}</span>
+          <span class="tag ${statusClass(p.status)}">${p.status || ""}</span>
+        </div>
+        <div class="card-title">${p.title}</div>
+        <div class="card-issuer">${p.issuing_body}</div>
+        <div class="card-summary">${p.summary}</div>
+      </div>
+      <div class="card-right">
+        <div class="card-date">${formatDate(p.release_date)}</div>
+        ${p.official_url ? `<a class="card-link" href="${p.official_url}" target="_blank" onclick="event.stopPropagation()" title="Official document">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>` : ""}
+      </div>
+    </div>
+  `).join("");
+}
+
+// ============================================================
+// FILTERING
+// ============================================================
+function filterPolicies() {
+  const query = document.getElementById("search-input").value.toLowerCase();
+  const sector = document.getElementById("filter-sector").value.toLowerCase();
+  const type = document.getElementById("filter-type").value.toLowerCase();
+  const status = document.getElementById("filter-status").value.toLowerCase();
+
+  const filtered = allPolicies.filter(p => {
+    const matchQuery = !query || [p.title, p.issuing_body, p.summary, p.sector, p.who_it_applies_to, p.key_obligations].join(" ").toLowerCase().includes(query);
+    const matchSector = !sector || (p.sector || "").toLowerCase().includes(sector);
+    const matchType = !type || (p.document_type || "").toLowerCase() === type;
+    const matchStatus = !status || (p.status || "").toLowerCase() === status;
+    return matchQuery && matchSector && matchType && matchStatus;
+  });
+
+  renderCards(filtered);
+}
+
+// ============================================================
+// MODAL
+// ============================================================
+function openModal(index) {
+  const p = allPolicies[index];
+  if (!p) return;
+
+  document.getElementById("modal-tags").innerHTML = sectorTag(p.sector) + `<span class="tag tag-type">${p.document_type || ""}</span>`;
+  document.getElementById("modal-title").textContent = p.title;
+  document.getElementById("modal-issuer").textContent = p.issuing_body;
+  document.getElementById("modal-date").textContent = formatDate(p.release_date);
+  document.getElementById("modal-status-text").textContent = p.status || "—";
+  document.getElementById("modal-verified").textContent = formatDate(p.last_verified);
+  document.getElementById("modal-summary").textContent = p.summary || "—";
+  document.getElementById("modal-applies").textContent = p.who_it_applies_to || "—";
+  document.getElementById("modal-obligations").textContent = p.key_obligations || "—";
+
+  const actions = document.getElementById("modal-actions");
+  actions.innerHTML = "";
+  if (p.official_url) {
+    actions.innerHTML += `<a class="btn-primary" href="${p.official_url}" target="_blank">View official document ↗</a>`;
+  }
+  if (p.archived_pdf) {
+    actions.innerHTML += `<a class="btn-secondary" href="${p.archived_pdf}" target="_blank">Archived PDF ↗</a>`;
+  }
+  if (!p.official_url && !p.archived_pdf) {
+    actions.innerHTML = `<span style="font-size:0.83rem;color:var(--ink-muted)">Document not yet publicly available</span>`;
+  }
+
+  document.getElementById("modal-overlay").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById("modal-overlay") && e.type !== "undefined") {
+    if (e.target !== document.getElementById("modal-overlay")) {
+      if (!e.target.closest) return;
+      return;
+    }
+  }
+  document.getElementById("modal-overlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+document.getElementById("modal-overlay").addEventListener("click", function(e) {
+  if (e.target === this) closeModal();
+});
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeModal();
+});
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function showPage(pageId) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll("nav a").forEach(a => a.classList.remove("active"));
+  document.getElementById("page-" + pageId).classList.add("active");
+  document.getElementById("nav-" + pageId).classList.add("active");
+  document.getElementById("hero-section").style.display = pageId === "index" ? "block" : "none";
+  window.scrollTo(0, 0);
+}
+
+function handleNotify(btn) {
+  const input = btn.previousElementSibling;
+  if (input.value && input.value.includes("@")) {
+    btn.textContent = "✓ We'll notify you";
+    btn.style.background = "var(--teal)";
+    input.value = "";
+    input.disabled = true;
+    btn.disabled = true;
+  }
+}
+
+// ============================================================
+// INIT
+// ============================================================
+loadData();
+</script>
+</body>
+</html>
