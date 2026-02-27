@@ -152,11 +152,49 @@
   .footer-links a { color: #6b8090; text-decoration: none; transition: color 0.15s; }
   .footer-links a:hover { color: var(--white); }
   @media (max-width: 768px) {
-    .hero { padding: 2rem 1.25rem; } main { padding: 1.25rem; } .hero-stats { gap: 1.5rem; }
-    nav a { font-size: 0.75rem; padding: 0.4rem 0.5rem; } .about-grid { grid-template-columns: 1fr; }
-    .card { grid-template-columns: 1fr; } .card-right { flex-direction: row; align-items: center; }
-    .modal { margin: 0; border-radius: 14px 14px 0 0; } .modal-overlay { align-items: flex-end; padding: 0; }
-  }
+  /* Header: stack logo and nav */
+  .header-inner { flex-wrap: wrap; height: auto; padding: 0.6rem 0; gap: 0.25rem; }
+  .logo { width: 100%; justify-content: center; }
+  nav { width: 100%; justify-content: center; flex-wrap: wrap; }
+  nav a { font-size: 0.72rem; padding: 0.35rem 0.45rem; }
+
+  /* Hero */
+  .hero { padding: 2rem 1.25rem 1.5rem; }
+  .hero h1 { font-size: 1.6rem; }
+  .hero p { font-size: 0.9rem; }
+  .hero-stats { gap: 1.5rem; }
+
+  /* Main content */
+  main { padding: 1rem; }
+
+  /* Filter controls: stack vertically */
+  .controls { flex-direction: column; align-items: stretch; padding: 1rem; }
+  .search-wrap { min-width: 100%; }
+  .filter-group { flex-direction: column; width: 100%; }
+  .filter-group select { width: 100%; }
+  .controls-right { margin-left: 0; justify-content: space-between; }
+
+  /* Cards */
+  .card { grid-template-columns: 1fr; }
+  .card-right { flex-direction: row; align-items: center; }
+
+  /* Modal: full-screen bottom sheet */
+  .modal-overlay { align-items: flex-end; padding: 0; }
+  .modal { margin: 0; border-radius: 14px 14px 0 0; max-height: 90vh; overflow-y: auto; }
+  .modal-header { padding: 1.25rem 1.25rem; }
+  .modal-body { padding: 1.25rem; }
+  .modal-title { font-size: 1.1rem; }
+  .modal-date-row { flex-direction: column; gap: 0.75rem; }
+
+  /* About page */
+  .about-grid { grid-template-columns: 1fr; }
+
+  /* Coming soon feature cards */
+  .coming-soon-features { grid-template-columns: 1fr; }
+
+  /* Footer */
+  .footer-inner { flex-direction: column; text-align: center; }
+}
 </style>
 </head>
 <body>
