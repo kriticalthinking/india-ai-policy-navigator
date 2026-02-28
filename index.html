@@ -462,6 +462,7 @@ function renderCards(policies) {
     return;
   }
   empty.style.display = "none";
+  policies.sort((a, b) => new Date(b.release_date || 0) - new Date(a.release_date || 0));
   const showing = policies.length === allPolicies.length ? `<span>${policies.length}</span> documents` : `<span>${policies.length}</span> of ${allPolicies.length}`;
   count.innerHTML = showing;
   grid.innerHTML = policies.map(p => `
